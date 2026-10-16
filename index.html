@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NutraTrim: It's not what you eat, it's when you eat it (and how much...)</title>
 <meta name="description" content="NutraTrim is the meal clock for losing weight. Calories in, calories out, carbs early, kitchen closed by 7. Reminders tell you when to eat and how much, and you can scan your plate to see how much of it fits.">
-<meta name="theme-color" content="#17163a">
+<meta name="theme-color" content="#11102a">
 <link rel="canonical" href="https://nutratrim.net/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nutratrim.net/">
@@ -23,10 +23,11 @@
 </script>
 <style>
 :root {
+  color-scheme: dark;
   --night: #17163a; --night-2: #221f49; --plum: #3b2652; --ember: #8a4330;
   --orange: #f47a35; --orange-2: #ffa76b; --peach: #ffd2a8;
   --green: #4db078; --indigo: #7b7fd0; --indigo-dim: #45478a;
-  --cream: #fbf6ef; --paper: #ffffff; --ink: #1d1b33; --muted: #66637d; --line: #ebe3d8;
+  --cream: #11102a; --paper: #1b1a3c; --ink: #f2f0fa; --muted: #aaa7c6; --line: rgba(255,255,255,.09);
   --radius: 22px;
   --display: "Fraunces", Georgia, serif;
   --body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -107,19 +108,22 @@ em.when { font-style: italic; color: var(--orange-2); }
 
 /* Sections */
 section { padding: 110px 0; }
+#how { background: linear-gradient(180deg, #17163a 0%, #11102a 100%); }
+#features { background: #11102a; }
+#faq { background: linear-gradient(180deg, #11102a, #15143a); }
 .center { text-align: center; }
 .center .lede { margin-inline: auto; }
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 56px; }
-.step { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px 32px; box-shadow: 0 20px 40px -30px rgba(29,27,51,.35); }
+.step { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px 32px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
 .step .num { font-family: var(--display); font-size: 60px; font-weight: 800; line-height: 1; color: transparent; -webkit-text-stroke: 2px var(--orange); }
 .step h3 { margin: 16px 0 8px; }
 .step p { margin: 0; color: var(--muted); }
-.step .ico { position: absolute; top: 28px; right: 26px; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: #fff1e6; }
+.step .ico { position: absolute; top: 28px; right: 26px; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: rgba(244,122,53,.14); }
 
 /* Planner */
-.planner { background: linear-gradient(180deg, var(--cream), #f5ecdf); }
-.planner-card { margin-top: 48px; display: grid; grid-template-columns: 360px 1fr; background: var(--paper); border-radius: 30px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 40px 80px -50px rgba(29,27,51,.45); }
-.controls { padding: 32px; background: var(--night); color: #fff; display: grid; gap: 22px; align-content: start; }
+.planner { background: radial-gradient(900px 500px at 50% 0%, rgba(244,122,53,.10), transparent 70%), linear-gradient(180deg, #11102a, #17153a); }
+.planner-card { margin-top: 48px; display: grid; grid-template-columns: 360px 1fr; background: var(--paper); border-radius: 30px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 40px 80px -40px rgba(0,0,0,.7); }
+.controls { padding: 32px; background: #141332; border-right: 1px solid var(--line); color: #fff; display: grid; gap: 22px; align-content: start; }
 .controls label { display: block; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 10px; }
 .weight-row { display: flex; align-items: center; gap: 10px; }
 .weight-row output { font-family: var(--display); font-size: 44px; font-weight: 800; line-height: 1; min-width: 120px; }
@@ -129,7 +133,7 @@ section { padding: 110px 0; }
 input[type=range] { width: 100%; accent-color: var(--orange); }
 .times { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: #fff; font: 600 15px var(--body); }
-select option { color: var(--ink); }
+select option { color: #f2f0fa; background: #1b1a3c; }
 .result { padding: 32px; display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: start; }
 .big-number { font-family: var(--display); font-size: 64px; font-weight: 800; line-height: 1; }
 .big-number small { font: 600 16px var(--body); color: var(--muted); margin-left: 6px; }
@@ -139,12 +143,12 @@ select option { color: var(--ink); }
 .meal:first-of-type { border-top: 0; }
 .meal time { font-weight: 700; font-variant-numeric: tabular-nums; }
 .meal .name { font-weight: 700; }
-.carbbar { height: 6px; border-radius: 6px; background: #f1ece4; margin-top: 6px; overflow: hidden; }
+.carbbar { height: 6px; border-radius: 6px; background: rgba(255,255,255,.08); margin-top: 6px; overflow: hidden; }
 .carbbar i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--orange), var(--orange-2)); transition: width .5s; }
 .meal .macros { font-size: 13px; color: var(--muted); margin-top: 4px; }
 .meal .cal { font-family: var(--display); font-size: 26px; font-weight: 800; text-align: right; }
 .meal .cal small { display: block; font: 600 12px var(--body); color: var(--muted); }
-.meal.closed .name { color: var(--indigo-dim); }
+.meal.closed .name { color: var(--indigo); }
 .note { font-size: 13px; color: var(--muted); margin-top: 16px; }
 
 /* Feature rows */
@@ -156,8 +160,8 @@ select option { color: var(--ink); }
 .feature .visual::before { content: ""; position: absolute; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, var(--glow, rgba(244,122,53,.22)), transparent 70%); }
 .ticks { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 12px; }
 .ticks li { display: flex; gap: 12px; align-items: flex-start; font-weight: 500; }
-.ticks li::before { content: "✓"; flex: none; width: 26px; height: 26px; border-radius: 50%; background: #e3f4ea; color: #2f8a57; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
-.callout { position: absolute; z-index: 2; padding: 14px 18px; border-radius: 18px; background: var(--paper); box-shadow: 0 24px 50px -20px rgba(29,27,51,.45); font-weight: 700; }
+.ticks li::before { content: "✓"; flex: none; width: 26px; height: 26px; border-radius: 50%; background: rgba(77,176,120,.16); color: #74d6a0; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+.callout { position: absolute; z-index: 2; padding: 14px 18px; border-radius: 18px; background: var(--paper); border: 1px solid var(--line); box-shadow: 0 24px 50px -20px rgba(0,0,0,.7); font-weight: 700; }
 .callout small { display: block; font-weight: 600; color: var(--muted); font-size: 13px; }
 .callout.big { font-family: var(--display); font-size: 30px; color: var(--orange); }
 
@@ -172,8 +176,8 @@ select option { color: var(--ink); }
 .watch .face span { font-size: 13px; color: rgba(255,255,255,.7); }
 .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
 .chip { padding: 10px 14px; border-radius: 14px; background: var(--paper); border: 1px solid var(--line); font-weight: 700; font-size: 15px; }
-.chip.o { background: #fff1e6; border-color: #ffd9bf; color: #c2531a; }
-.chip.g { background: #e7f6ee; border-color: #c4e8d3; color: #2f8a57; }
+.chip.o { background: rgba(244,122,53,.15); border-color: rgba(244,122,53,.4); color: #ffab72; }
+.chip.g { background: rgba(77,176,120,.15); border-color: rgba(77,176,120,.4); color: #74d6a0; }
 
 /* Quote */
 .quote { background: linear-gradient(135deg, var(--night), var(--plum) 60%, var(--ember)); color: #fff; text-align: center; padding: 130px 0; position: relative; overflow: hidden; }
@@ -197,14 +201,14 @@ details p { margin: 0 0 20px; color: var(--muted); }
 .download .badges { justify-content: center; }
 .download .lede { color: rgba(255,255,255,.75); margin-inline: auto; margin-top: 18px; }
 
-footer { background: #100f29; color: rgba(255,255,255,.6); padding: 56px 0 40px; font-size: 14px; }
+footer { background: #0b0a1f; color: rgba(255,255,255,.6); padding: 56px 0 40px; font-size: 14px; }
 footer .wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; }
 footer nav { display: flex; gap: 22px; flex-wrap: wrap; justify-content: flex-end; }
 footer a { color: rgba(255,255,255,.8); text-decoration: none; }
 footer a:hover { color: #fff; }
 footer .disclaimer { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.08); padding-top: 22px; font-size: 13px; line-height: 1.6; }
 
-.toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 30px); opacity: 0; background: var(--ink); color: #fff; padding: 14px 20px; border-radius: 14px; font-weight: 600; font-size: 15px; box-shadow: 0 20px 40px -10px rgba(0,0,0,.5); transition: opacity .3s, transform .3s; z-index: 100; pointer-events: none; max-width: calc(100% - 32px); text-align: center; }
+.toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 30px); opacity: 0; background: #2b2958; border: 1px solid rgba(255,255,255,.12); color: #fff; padding: 14px 20px; border-radius: 14px; font-weight: 600; font-size: 15px; box-shadow: 0 20px 40px -10px rgba(0,0,0,.5); transition: opacity .3s, transform .3s; z-index: 100; pointer-events: none; max-width: calc(100% - 32px); text-align: center; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* Reveal on scroll */
@@ -519,7 +523,7 @@ function arc(from, to, r) {
   return `M${x1.toFixed(1)} ${y1.toFixed(1)} A${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
 }
 function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
-function drawDial(svg, p, { dark, hand }) {
+function drawDial(svg, p, { dark, hand, center }) {
   svg.innerHTML = "";
   const r = 238, w = dark ? 22 : 30;
   el("circle", { cx: 300, cy: 300, r, fill: "none", stroke: dark ? "rgba(123,127,208,.45)" : "#d9d8ef", "stroke-width": w }, svg);
@@ -534,12 +538,12 @@ function drawDial(svg, p, { dark, hand }) {
       t.textContent = ["12a", "6a", "12p", "6p"][h / 6];
     }
   }
-  if (!dark) {
-    const t1 = el("text", { x: 300, y: 292, "text-anchor": "middle", "font-size": 64, "font-weight": 800, fill: "#1d1b33", "font-family": "Fraunces, serif" }, svg);
+  if (center) {
+    const t1 = el("text", { x: 300, y: 292, "text-anchor": "middle", "font-size": 64, "font-weight": 800, fill: "#f2f0fa", "font-family": "Fraunces, serif" }, svg);
     t1.textContent = fmt(p.target);
-    const t2 = el("text", { x: 300, y: 330, "text-anchor": "middle", "font-size": 20, "font-weight": 600, fill: "#66637d", "font-family": "Plus Jakarta Sans, sans-serif" }, svg);
+    const t2 = el("text", { x: 300, y: 330, "text-anchor": "middle", "font-size": 20, "font-weight": 600, fill: "#aaa7c6", "font-family": "Plus Jakarta Sans, sans-serif" }, svg);
     t2.textContent = "calories a day";
-    const t3 = el("text", { x: 300, y: 372, "text-anchor": "middle", "font-size": 18, "font-weight": 700, fill: "#4db078", "font-family": "Plus Jakarta Sans, sans-serif" }, svg);
+    const t3 = el("text", { x: 300, y: 372, "text-anchor": "middle", "font-size": 18, "font-weight": 700, fill: "#74d6a0", "font-family": "Plus Jakarta Sans, sans-serif" }, svg);
     t3.textContent = `open ${clock(p.first)}–${clock(p.close)}`;
   }
   if (hand != null) {
@@ -600,8 +604,8 @@ function render() {
   const perWeek = p.deficit * 7 / 3500, rate = state.unit === "lb" ? `${perWeek.toFixed(1)} lb` : `${(perWeek / 2.20462).toFixed(1)} kg`;
   document.getElementById("stats").innerHTML =
     `<span>Burn <b>${fmt(p.baseline)}</b></span><span>Deficit <b>${fmt(p.deficit)}</b></span><span>≈ <b>${rate}</b> a week</span>` +
-    (p.deficit < state.deficit ? `<span style="color:#c2531a">Floor of 1,200 applied</span>` : "") +
-    (p.count < state.meals ? `<span style="color:#c2531a">Only ${p.count} meals fit 2 hours apart</span>` : "");
+    (p.deficit < state.deficit ? `<span style="color:#ffab72">Floor of 1,200 applied</span>` : "") +
+    (p.count < state.meals ? `<span style="color:#ffab72">Only ${p.count} meals fit 2 hours apart</span>` : "");
   document.getElementById("meals").innerHTML = p.meals.map(m => `
     <div class="meal"><time>${clock(m.start)}</time>
       <div><div class="name">${m.name}</div>
@@ -609,7 +613,7 @@ function render() {
         <div class="macros">Carbs ${m.carb}% · ${m.g.c} g carbs · ${m.g.p} g protein · ${m.g.f} g fat</div></div>
       <div class="cal">${m.cal}<small>calories</small></div></div>`).join("") +
     `<div class="meal closed"><time>${clock(p.close)}</time><div><div class="name">Kitchen closes 🔒</div><div class="macros">Nothing more until ${clock(p.first)}</div></div><div></div></div>`;
-  drawDial(document.getElementById("planDial"), p, { dark: false });
+  drawDial(document.getElementById("planDial"), p, { dark: true, center: true });
 }
 weightIn.addEventListener("input", () => { state.weight = +weightIn.value; render(); });
 document.querySelectorAll("[data-unit]").forEach(b => b.addEventListener("click", () => {
