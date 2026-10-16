@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NutraTrim: It's not what you eat, it's when you eat it</title>
+<title>NutraTrim: It's not what you eat, it's when you eat it (and how much...)</title>
 <meta name="description" content="NutraTrim is the meal clock for losing weight. Calories in, calories out, carbs early, kitchen closed by 7. Reminders tell you when to eat and how much, and you can scan your plate to see how much of it fits.">
 <meta name="theme-color" content="#17163a">
 <link rel="canonical" href="https://nutratrim.net/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nutratrim.net/">
-<meta property="og:title" content="NutraTrim: It's not what you eat, it's when you eat it">
+<meta property="og:title" content="NutraTrim: It's not what you eat, it's when you eat it (and how much...)">
 <meta property="og:description" content="The meal clock for losing weight. Calories in, calories out, carbs early, kitchen closed by 7.">
 <meta property="og:image" content="https://nutratrim.net/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -42,6 +42,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.05; margin: 0; letter-s
 h2 { font-size: clamp(34px, 4.6vw, 54px); font-weight: 800; }
 h3 { font-size: 24px; font-weight: 800; }
 em.when { font-style: italic; color: var(--orange-2); }
+.aside { display: block; margin-top: .18em; font-size: .42em; font-weight: 600; font-style: italic; letter-spacing: 0; color: rgba(255,255,255,.72); }
 .lede { font-size: clamp(18px, 1.6vw, 21px); color: var(--muted); max-width: 640px; }
 
 /* Nav */
@@ -263,7 +264,7 @@ footer .disclaimer { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255
   <div class="wrap hero-grid">
     <div>
       <span class="pill"><b>NEW</b> The meal clock for losing weight</span>
-      <h1>It's not what you eat. It's <em class="when">when</em> you eat it.</h1>
+      <h1>It's not what you eat. It's <em class="when">when</em> you eat it <span class="aside">(and how much...)</span></h1>
       <p class="lede">NutraTrim turns weight loss into a clock. Calories in, calories out, carbs early, kitchen closed by 7. It plans every meal, then tells you when it's time and how much to eat.</p>
       <div class="badges">
         <a class="badge store" data-store="appStore" href="#" aria-label="Download on the App Store"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store" width="162" height="54"></a>
@@ -411,7 +412,7 @@ footer .disclaimer { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255
 
 <section class="quote">
   <div class="wrap reveal">
-    <blockquote>It's not what you eat.<br>It's <em class="when">when</em> you eat it.</blockquote>
+    <blockquote>It's not what you eat.<br>It's <em class="when">when</em> you eat it <span class="aside">(and how much...)</span></blockquote>
     <p>Eat a little less than you burn. Front-load your day. Close the kitchen. Repeat.</p>
   </div>
 </section>
@@ -568,7 +569,7 @@ heroTick(); setInterval(heroTick, 1000);
 const NOTES = [
   ["now", "Time to eat! 🍽 Breakfast", "Eat 600 calories in the next half hour. Try: Greek yogurt berry bowl."],
   ["now", "Time to eat! 🍽 Lunch", "Eat 500 calories in the next half hour, keep carbs around 44 g."],
-  ["now", "Kitchen's closed 🔒", "No more food until 7:00 AM tomorrow. It's not what you eat, it's when you eat it."],
+  ["now", "Kitchen's closed 🔒", "No more food until 7:00 AM tomorrow. It's not what you eat, it's when you eat it (and how much...)"],
   ["now", "Time to eat! 🍽 Dinner", "Eat 400 calories in the next half hour. Try: salmon and asparagus."],
 ];
 function noteHTML([when, title, body]) {
