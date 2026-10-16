@@ -1,19 +1,667 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NutraTrim</title><link rel="icon" href="icon.png"><link rel="stylesheet" href="style.css"></head>
-<body><main>
-<header><img src="icon.png" alt=""><div><h1>NutraTrim</h1><div class="muted">It's not what you eat, it's when you eat it.</div></div></header>
-<p>NutraTrim is a meal clock for iPhone. Tell it what you burn, pick a deficit, and it plans your day: when to eat, how many calories each meal gets, and fewer carbs as the day goes on. At each meal it sends a reminder: "Time to eat! Eat 430 calories in the next half hour", with food ideas that fit. When the kitchen closes, it says so.</p>
-<div class="card">
-<ul>
-<li>Calories in, calories out: a daily deficit you choose, never below 1,200 calories</li>
-<li>Bigger meals early, lower-carb meals late, nothing after 7 PM or close to bedtime</li>
-<li>Meal reminders with food ideas sized to the calories</li>
-<li>Scan your plate: photograph your food and see how much of it fits the meal</li>
-<li>Workouts widen your deficit or let you eat a little more, your choice, with Apple Health and Apple Watch</li>
-<li>A 24-hour clock, a daily balance and a streak for days on plan</li>
-</ul>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NutraTrim: It's not what you eat, it's when you eat it</title>
+<meta name="description" content="NutraTrim is the meal clock for losing weight. Calories in, calories out, carbs early, kitchen closed by 7. Reminders tell you when to eat and how much, and you can scan your plate to see how much of it fits.">
+<meta name="theme-color" content="#17163a">
+<link rel="canonical" href="https://nutratrim.net/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nutratrim.net/">
+<meta property="og:title" content="NutraTrim: It's not what you eat, it's when you eat it">
+<meta property="og:description" content="The meal clock for losing weight. Calories in, calories out, carbs early, kitchen closed by 7.">
+<meta property="og:image" content="https://nutratrim.net/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,600;1,9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MobileApplication","name":"NutraTrim","operatingSystem":"iOS","applicationCategory":"HealthApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Heart and Soil Living LTD."},"url":"https://nutratrim.net/"}
+</script>
+<style>
+:root {
+  --night: #17163a; --night-2: #221f49; --plum: #3b2652; --ember: #8a4330;
+  --orange: #f47a35; --orange-2: #ffa76b; --peach: #ffd2a8;
+  --green: #4db078; --indigo: #7b7fd0; --indigo-dim: #45478a;
+  --cream: #fbf6ef; --paper: #ffffff; --ink: #1d1b33; --muted: #66637d; --line: #ebe3d8;
+  --radius: 22px;
+  --display: "Fraunces", Georgia, serif;
+  --body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--cream); color: var(--ink); font: 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+.wrap { width: min(1160px, 100% - 40px); margin-inline: auto; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.05; margin: 0; letter-spacing: -.01em; }
+h2 { font-size: clamp(34px, 4.6vw, 54px); font-weight: 800; }
+h3 { font-size: 24px; font-weight: 800; }
+em.when { font-style: italic; color: var(--orange-2); }
+.lede { font-size: clamp(18px, 1.6vw, 21px); color: var(--muted); max-width: 640px; }
+
+/* Nav */
+.nav { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .3s, box-shadow .3s; }
+.nav.scrolled { background: rgba(23, 22, 58, .86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 rgba(255,255,255,.06); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; font-weight: 800; font-size: 20px; }
+.brand img { width: 38px; height: 38px; border-radius: 10px; }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: rgba(255,255,255,.78); text-decoration: none; font-weight: 600; font-size: 15px; }
+.nav-links a:hover { color: #fff; }
+.btn { white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; padding: 12px 22px; font-weight: 700; font-size: 15px; text-decoration: none; border: 0; cursor: pointer; font-family: inherit; transition: transform .15s, box-shadow .2s, background .2s; }
+.btn-orange { background: var(--orange); color: #fff; box-shadow: 0 8px 24px -8px rgba(244,122,53,.7); }
+.btn-orange:hover { transform: translateY(-1px); background: #ff8743; }
+@media (max-width: 860px) { .nav-links a:not(.btn) { display: none; } }
+
+/* Hero */
+.hero { position: relative; color: #fff; padding: 140px 0 110px; overflow: hidden;
+  background: radial-gradient(1200px 600px at 85% 20%, rgba(244,122,53,.28), transparent 60%),
+              radial-gradient(900px 600px at 0% 100%, rgba(123,127,208,.25), transparent 60%),
+              linear-gradient(160deg, var(--night) 0%, var(--night-2) 45%, var(--plum) 100%); }
+.hero::after { content: ""; position: absolute; inset: auto 0 -1px 0; height: 120px; background: linear-gradient(to bottom, transparent, rgba(23,22,58,.0)); pointer-events: none; }
+.stars { position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 32% 8%, #fff, transparent), radial-gradient(1.5px 1.5px at 58% 26%, #fff, transparent), radial-gradient(1px 1px at 72% 12%, #fff, transparent), radial-gradient(1px 1px at 8% 62%, #fff, transparent), radial-gradient(1.5px 1.5px at 44% 78%, #fff, transparent), radial-gradient(1px 1px at 92% 70%, #fff, transparent); }
+.hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 8px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); font-size: 14px; font-weight: 600; color: rgba(255,255,255,.88); }
+.pill b { background: var(--orange); color: #fff; border-radius: 999px; padding: 3px 10px; font-size: 12px; letter-spacing: .04em; }
+.hero h1 { font-size: clamp(46px, 6.6vw, 86px); font-weight: 800; margin: 22px 0 22px; }
+.hero p.lede { color: rgba(255,255,255,.78); }
+.badges { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 32px; }
+.badge { display: inline-block; border-radius: 12px; transition: transform .15s, filter .2s; }
+.badge:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.badge img { height: 54px; width: auto; }
+.badge.play img { height: 80px; margin: -13px; } /* Google's badge carries its own padding */
+.fine { font-size: 14px; color: rgba(255,255,255,.6); margin-top: 14px; }
+.now-chip { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; padding: 10px 16px; border-radius: 14px; background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.1); font-size: 15px; color: rgba(255,255,255,.86); }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(77,176,120,.7); animation: pulse 2s infinite; flex: none; }
+.dot.closed { background: var(--indigo); box-shadow: 0 0 0 0 rgba(123,127,208,.7); }
+.dot.eat { background: var(--orange); box-shadow: 0 0 0 0 rgba(244,122,53,.7); }
+@keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(0,0,0,0); } 100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); } }
+
+.stage { position: relative; height: 640px; display: grid; place-items: center; }
+.stage .ring { position: absolute; width: min(600px, 112%); aspect-ratio: 1; }
+.phone { position: relative; width: 290px; aspect-ratio: 645 / 1400; border-radius: 48px; padding: 10px; background: linear-gradient(145deg, #2c2a3a, #0c0b12); box-shadow: 0 40px 80px -20px rgba(0,0,0,.65), inset 0 0 0 2px rgba(255,255,255,.08); }
+.phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 39px; }
+.hero .phone { transform: rotate(-4deg); animation: float 7s ease-in-out infinite; }
+@keyframes float { 50% { transform: rotate(-4deg) translateY(-12px); } }
+.notif { position: absolute; width: 300px; padding: 14px 16px; border-radius: 20px; color: var(--ink); background: rgba(255,255,255,.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 20px 40px -12px rgba(0,0,0,.45); font-size: 14px; line-height: 1.4; opacity: 0; transform: translateY(12px) scale(.97); transition: opacity .6s, transform .6s; }
+.notif.show { opacity: 1; transform: none; }
+.notif .top { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.notif .top img { width: 20px; height: 20px; border-radius: 5px; }
+.notif .top span:last-child { margin-left: auto; text-transform: none; letter-spacing: 0; font-weight: 500; }
+.notif strong { display: block; font-size: 15px; }
+.notif-a { top: 70px; left: -30px; }
+.notif-b { bottom: 90px; right: -36px; }
+
+/* Ticker */
+.ticker { background: var(--orange); color: #fff; overflow: hidden; white-space: nowrap; padding: 16px 0; font-weight: 700; font-size: 18px; }
+.ticker .track { display: inline-flex; gap: 48px; padding-left: 48px; animation: tick 38s linear infinite; }
+.ticker span::after { content: "✦"; margin-left: 48px; opacity: .7; }
+@keyframes tick { to { transform: translateX(-50%); } }
+
+/* Sections */
+section { padding: 110px 0; }
+.center { text-align: center; }
+.center .lede { margin-inline: auto; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 56px; }
+.step { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px 32px; box-shadow: 0 20px 40px -30px rgba(29,27,51,.35); }
+.step .num { font-family: var(--display); font-size: 60px; font-weight: 800; line-height: 1; color: transparent; -webkit-text-stroke: 2px var(--orange); }
+.step h3 { margin: 16px 0 8px; }
+.step p { margin: 0; color: var(--muted); }
+.step .ico { position: absolute; top: 28px; right: 26px; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: #fff1e6; }
+
+/* Planner */
+.planner { background: linear-gradient(180deg, var(--cream), #f5ecdf); }
+.planner-card { margin-top: 48px; display: grid; grid-template-columns: 360px 1fr; background: var(--paper); border-radius: 30px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 40px 80px -50px rgba(29,27,51,.45); }
+.controls { padding: 32px; background: var(--night); color: #fff; display: grid; gap: 22px; align-content: start; }
+.controls label { display: block; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 10px; }
+.weight-row { display: flex; align-items: center; gap: 10px; }
+.weight-row output { font-family: var(--display); font-size: 44px; font-weight: 800; line-height: 1; min-width: 120px; }
+.seg { display: inline-flex; background: rgba(255,255,255,.08); border-radius: 12px; padding: 4px; gap: 4px; flex-wrap: wrap; }
+.seg button { border: 0; background: transparent; color: rgba(255,255,255,.75); font: 600 14px var(--body); padding: 8px 12px; border-radius: 9px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--orange); color: #fff; }
+input[type=range] { width: 100%; accent-color: var(--orange); }
+.times { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: #fff; font: 600 15px var(--body); }
+select option { color: var(--ink); }
+.result { padding: 32px; display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: start; }
+.big-number { font-family: var(--display); font-size: 64px; font-weight: 800; line-height: 1; }
+.big-number small { font: 600 16px var(--body); color: var(--muted); margin-left: 6px; }
+.stats { display: flex; gap: 18px; flex-wrap: wrap; margin: 10px 0 22px; color: var(--muted); font-size: 15px; }
+.stats b { color: var(--ink); }
+.meal { display: grid; grid-template-columns: 84px 1fr auto; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
+.meal:first-of-type { border-top: 0; }
+.meal time { font-weight: 700; font-variant-numeric: tabular-nums; }
+.meal .name { font-weight: 700; }
+.carbbar { height: 6px; border-radius: 6px; background: #f1ece4; margin-top: 6px; overflow: hidden; }
+.carbbar i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--orange), var(--orange-2)); transition: width .5s; }
+.meal .macros { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.meal .cal { font-family: var(--display); font-size: 26px; font-weight: 800; text-align: right; }
+.meal .cal small { display: block; font: 600 12px var(--body); color: var(--muted); }
+.meal.closed .name { color: var(--indigo-dim); }
+.note { font-size: 13px; color: var(--muted); margin-top: 16px; }
+
+/* Feature rows */
+.feature { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding: 60px 0; }
+.feature.flip .copy { order: 2; }
+.feature .copy p { color: var(--muted); font-size: 18px; }
+.feature h2 { font-size: clamp(32px, 3.8vw, 46px); margin: 14px 0 18px; }
+.feature .visual { display: grid; place-items: center; position: relative; }
+.feature .visual::before { content: ""; position: absolute; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, var(--glow, rgba(244,122,53,.22)), transparent 70%); }
+.ticks { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 12px; }
+.ticks li { display: flex; gap: 12px; align-items: flex-start; font-weight: 500; }
+.ticks li::before { content: "✓"; flex: none; width: 26px; height: 26px; border-radius: 50%; background: #e3f4ea; color: #2f8a57; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+.callout { position: absolute; z-index: 2; padding: 14px 18px; border-radius: 18px; background: var(--paper); box-shadow: 0 24px 50px -20px rgba(29,27,51,.45); font-weight: 700; }
+.callout small { display: block; font-weight: 600; color: var(--muted); font-size: 13px; }
+.callout.big { font-family: var(--display); font-size: 30px; color: var(--orange); }
+
+/* Watch */
+.watch-wrap { position: relative; display: grid; place-items: center; gap: 22px; }
+.watch { width: 220px; height: 260px; border-radius: 60px; background: linear-gradient(150deg, #2b2b33, #09090c); padding: 16px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.55), inset 0 0 0 2px rgba(255,255,255,.08); position: relative; }
+.watch::before, .watch::after { content: ""; position: absolute; left: 50%; transform: translateX(-50%); width: 150px; height: 80px; background: #1f1e27; z-index: -1; }
+.watch::before { top: -60px; border-radius: 30px 30px 0 0; }
+.watch::after { bottom: -60px; border-radius: 0 0 30px 30px; }
+.watch .face { width: 100%; height: 100%; border-radius: 46px; background: #000; display: grid; place-items: center; text-align: center; color: #fff; }
+.watch .face b { font-family: var(--display); font-size: 46px; color: #ff4f6d; line-height: 1; display: block; }
+.watch .face span { font-size: 13px; color: rgba(255,255,255,.7); }
+.flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.chip { padding: 10px 14px; border-radius: 14px; background: var(--paper); border: 1px solid var(--line); font-weight: 700; font-size: 15px; }
+.chip.o { background: #fff1e6; border-color: #ffd9bf; color: #c2531a; }
+.chip.g { background: #e7f6ee; border-color: #c4e8d3; color: #2f8a57; }
+
+/* Quote */
+.quote { background: linear-gradient(135deg, var(--night), var(--plum) 60%, var(--ember)); color: #fff; text-align: center; padding: 130px 0; position: relative; overflow: hidden; }
+.quote blockquote { margin: 0 auto; max-width: 980px; font-family: var(--display); font-size: clamp(40px, 6vw, 78px); font-weight: 800; line-height: 1.04; }
+.quote p { color: rgba(255,255,255,.7); margin-top: 26px; font-size: 18px; }
+
+/* FAQ */
+.faq { max-width: 820px; margin: 48px auto 0; }
+details { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 4px 24px; margin-bottom: 12px; }
+summary { cursor: pointer; list-style: none; font-weight: 700; font-size: 18px; padding: 18px 0; display: flex; justify-content: space-between; gap: 18px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-size: 26px; line-height: 1; color: var(--orange); transition: transform .2s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { margin: 0 0 20px; color: var(--muted); }
+
+/* Download */
+.download { background: var(--night); color: #fff; text-align: center; padding: 120px 0; position: relative; overflow: hidden; }
+.download::before { content: ""; position: absolute; width: 900px; height: 900px; left: 50%; top: 40%; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(244,122,53,.25), transparent 60%); }
+.download .wrap { position: relative; }
+.download img.icon { width: 112px; height: 112px; border-radius: 26px; margin: 0 auto 28px; box-shadow: 0 30px 60px -20px rgba(244,122,53,.6); }
+.download .badges { justify-content: center; }
+.download .lede { color: rgba(255,255,255,.75); margin-inline: auto; margin-top: 18px; }
+
+footer { background: #100f29; color: rgba(255,255,255,.6); padding: 56px 0 40px; font-size: 14px; }
+footer .wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; }
+footer nav { display: flex; gap: 22px; flex-wrap: wrap; justify-content: flex-end; }
+footer a { color: rgba(255,255,255,.8); text-decoration: none; }
+footer a:hover { color: #fff; }
+footer .disclaimer { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.08); padding-top: 22px; font-size: 13px; line-height: 1.6; }
+
+.toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 30px); opacity: 0; background: var(--ink); color: #fff; padding: 14px 20px; border-radius: 14px; font-weight: 600; font-size: 15px; box-shadow: 0 20px 40px -10px rgba(0,0,0,.5); transition: opacity .3s, transform .3s; z-index: 100; pointer-events: none; max-width: calc(100% - 32px); text-align: center; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (max-width: 980px) {
+  .hero { padding: 120px 0 80px; }
+  .hero-grid, .feature, .planner-card, .result { grid-template-columns: 1fr; }
+  .feature { gap: 40px; padding: 40px 0; }
+  .feature.flip .copy { order: 0; }
+  .stage { height: 560px; }
+  .steps { grid-template-columns: 1fr; }
+  footer .wrap { grid-template-columns: 1fr; }
+  footer nav { justify-content: flex-start; }
+  .result { gap: 20px; }
+  .result svg { max-width: 260px; margin: 0 auto; }
+}
+@media (max-width: 520px) {
+  section { padding: 80px 0; }
+  .nav .btn { padding: 9px 16px; font-size: 14px; }
+  .brand { font-size: 18px; }
+  .brand img { width: 32px; height: 32px; }
+  .notif { width: 250px; font-size: 13px; }
+  .notif-a { left: -6px; top: 30px; }
+  .notif-b { right: -6px; bottom: 60px; }
+  .phone { width: 250px; }
+  .stage { height: 520px; }
+  .controls, .result { padding: 24px; }
+  .meal { grid-template-columns: 70px 1fr auto; }
+  .callout { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/apple-touch-icon.png" alt="">NutraTrim</a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#plan">Plan my day</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-orange" href="#download">Get the app</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="stars"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill"><b>NEW</b> The meal clock for losing weight</span>
+      <h1>It's not what you eat. It's <em class="when">when</em> you eat it.</h1>
+      <p class="lede">NutraTrim turns weight loss into a clock. Calories in, calories out, carbs early, kitchen closed by 7. It plans every meal, then tells you when it's time and how much to eat.</p>
+      <div class="badges">
+        <a class="badge store" data-store="appStore" href="#" aria-label="Download on the App Store"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store" width="162" height="54"></a>
+        <a class="badge play store" data-store="googlePlay" href="#" aria-label="Get it on Google Play"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" width="206" height="80"></a>
+      </div>
+      <p class="fine">Free download · No account needed · Your data stays on your phone</p>
+      <div class="now-chip" id="nowChip" aria-live="polite"><span class="dot" id="nowDot"></span><span id="nowText">Checking the kitchen…</span></div>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <svg class="ring" id="heroDial" viewBox="0 0 600 600"></svg>
+      <div class="phone"><picture><source srcset="img/today.webp" type="image/webp"><img src="img/today.jpg" alt="NutraTrim's Today screen with the 24-hour meal clock" width="645" height="1400"></picture></div>
+      <div class="notif notif-a" id="notifA"></div>
+      <div class="notif notif-b" id="notifB"></div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div class="track" id="ticker">
+  <span>Calories in, calories out</span><span>Carbs early, protein late</span><span>Kitchen closes at 7</span><span>Reminders at every meal</span><span>Scan your plate</span><span>Works with Apple Watch</span><span>Never below 1,200 calories</span>
+</div></div>
+
+<section id="how">
+  <div class="wrap center reveal">
+    <span class="eyebrow">How it works</span>
+    <h2 style="margin-top:14px">Three steps, then the clock takes over.</h2>
+    <p class="lede">No points, no food bans, no logging every crumb. Just the right amount at the right time.</p>
+  </div>
+  <div class="wrap steps">
+    <article class="step reveal"><span class="ico">🔥</span><div class="num">01</div><h3>Tell it what you burn</h3><p>Start from your weight (pounds × 10) or your own number, and pick a gentle, steady or strong deficit. Your target never drops below 1,200 calories.</p></article>
+    <article class="step reveal"><span class="ico">🕖</span><div class="num">02</div><h3>It plans your day</h3><p>Meals spread across your eating window: bigger and carb-friendly in the morning, leaner and lower-carb at night. The kitchen closes at 7, or three hours before bed.</p></article>
+    <article class="step reveal"><span class="ico">🔔</span><div class="num">03</div><h3>The clock tells you</h3><p>"Time to eat! Eat 430 calories in the next half hour," with a meal idea that fits. When the kitchen closes, it says so. That's it.</p></article>
+  </div>
+</section>
+
+<section class="planner" id="plan">
+  <div class="wrap center reveal">
+    <span class="eyebrow">Try it now</span>
+    <h2 style="margin-top:14px">Plan my day</h2>
+    <p class="lede">Move the slider and watch your day take shape. This is the same math the app uses.</p>
+  </div>
+  <div class="wrap">
+    <div class="planner-card reveal">
+      <div class="controls">
+        <div>
+          <label for="weight">Your weight</label>
+          <div class="weight-row"><output id="weightOut">180 lb</output>
+            <div class="seg" role="group" aria-label="Unit"><button type="button" data-unit="lb" aria-pressed="true">lb</button><button type="button" data-unit="kg" aria-pressed="false">kg</button></div>
+          </div>
+          <input type="range" id="weight" min="100" max="400" value="180" step="1" aria-label="Weight">
+        </div>
+        <div>
+          <label>Deficit</label>
+          <div class="seg" role="group" aria-label="Deficit" id="deficitSeg">
+            <button type="button" data-v="250" aria-pressed="false">Gentle</button><button type="button" data-v="500" aria-pressed="true">Steady</button><button type="button" data-v="750" aria-pressed="false">Strong</button>
+          </div>
+        </div>
+        <div>
+          <label>Meals a day</label>
+          <div class="seg" role="group" aria-label="Meals a day" id="mealsSeg">
+            <button type="button" data-v="2" aria-pressed="false">2</button><button type="button" data-v="3" aria-pressed="true">3</button><button type="button" data-v="4" aria-pressed="false">4</button><button type="button" data-v="5" aria-pressed="false">5</button>
+          </div>
+        </div>
+        <div class="times">
+          <div><label for="first">First meal</label><select id="first"></select></div>
+          <div><label for="close">Kitchen closes</label><select id="close"></select></div>
+        </div>
+      </div>
+      <div class="result">
+        <svg id="planDial" viewBox="0 0 600 600" role="img" aria-label="Your eating window on a 24-hour clock"></svg>
+        <div>
+          <div class="big-number" id="target">1,300<small>calories a day</small></div>
+          <div class="stats" id="stats"></div>
+          <div id="meals"></div>
+          <p class="note">Weight × 10 is a rough resting estimate; the app lets you enter your own number. Estimates only, not medical advice.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="features">
+  <section style="padding-bottom:0">
+    <div class="wrap feature reveal">
+      <div class="copy">
+        <span class="eyebrow">What to eat</span>
+        <h2>Meal ideas sized to the calorie.</h2>
+        <p>Every meal comes with ideas scaled to its exact calories and carb target, with real portions: "Salmon and asparagus: 5 oz salmon, 1 cup asparagus." Breakfast gets the carbs. Dinner gets the protein.</p>
+        <ul class="ticks"><li>60+ meals built from everyday food</li><li>Carbs taper from 50% at breakfast to 20% at dinner</li><li>Today and tomorrow, ready to shop for</li></ul>
+      </div>
+      <div class="visual">
+        <div class="phone"><picture><source srcset="img/menu.webp" type="image/webp"><img src="img/menu.jpg" alt="The What to eat screen with meal ideas and portions" loading="lazy" width="645" height="1400"></picture></div>
+        <div class="callout" style="left:2%;top:18%"><small>Breakfast carbs</small>50%</div>
+        <div class="callout" style="right:0;bottom:22%"><small>Dinner carbs</small>20%</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:0">
+    <div class="wrap feature flip reveal">
+      <div class="copy">
+        <span class="eyebrow">Scan your plate</span>
+        <h2>Snap your plate. Know how much to eat.</h2>
+        <p>Already have food in front of you? Take a photo. NutraTrim identifies each food, estimates the calories, and tells you how much of it fits this meal. Or take the smarter route: keep the chicken and vegetables, skip the rice.</p>
+        <ul class="ticks"><li>Every food listed with its portion and macros</li><li>"Eat 55% of this plate", in plain words</li><li>A carb-first trim plan that keeps the protein</li></ul>
+      </div>
+      <div class="visual" style="--glow: rgba(77,176,120,.22)">
+        <div class="phone"><picture><source srcset="img/plate.webp" type="image/webp"><img src="img/plate.jpg" alt="A plate scan result saying eat 55% of this plate" loading="lazy" width="645" height="1400"></picture></div>
+        <div class="callout big" style="left:0;top:30%">55%<small>of this plate fits</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:0">
+    <div class="wrap feature reveal">
+      <div class="copy">
+        <span class="eyebrow">Workouts</span>
+        <h2>Burned it? Bank it, or eat it.</h2>
+        <p>You choose what exercise does. Add it to your deficit and lose faster, eat back half, or eat it all back. Connect Apple Health and the workouts from your Apple Watch count automatically.</p>
+        <ul class="ticks"><li>Three settings: deficit, half, or all</li><li>Earned calories go to your next meals, never after 7</li><li>Read-only: your Health data never leaves your iPhone</li></ul>
+      </div>
+      <div class="visual" style="--glow: rgba(255,79,109,.18)">
+        <div class="watch-wrap">
+          <div class="watch"><div class="face"><div><b id="burn">320</b><span>active calories</span></div></div></div>
+          <div class="flow"><span class="chip">Eat back half</span><span>→</span><span class="chip o">+160 cal at dinner</span><span>→</span><span class="chip g">deficit +160</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap feature flip reveal">
+      <div class="copy">
+        <span class="eyebrow">Progress</span>
+        <h2>Watch the deficit add up.</h2>
+        <p>In, out and the balance for today. A 7-day total and what it means in pounds. A streak for every day you stayed on plan and kept the kitchen closed.</p>
+        <ul class="ticks"><li>3,500 calories ≈ 1 pound, shown plainly</li><li>Day-by-day history with late-night slips flagged</li><li>Streaks that reward keeping the kitchen closed</li></ul>
+      </div>
+      <div class="visual" style="--glow: rgba(123,127,208,.25)">
+        <div class="phone"><picture><source srcset="img/progress.webp" type="image/webp"><img src="img/progress.jpg" alt="The Progress screen with a 7-day deficit and streak" loading="lazy" width="645" height="1400"></picture></div>
+        <div class="callout" style="right:2%;top:20%"><small>Last 7 days</small>−5,580 cal</div>
+      </div>
+    </div>
+  </section>
 </div>
-<p class="muted">NutraTrim is a planning tool for healthy adults, not medical advice. Talk to your doctor before cutting calories if you are pregnant or nursing, have diabetes or another condition, or have a history of eating disorders.</p>
-<nav><a href="support.html">Support</a><a href="privacy.html">Privacy Policy</a></nav>
-</main></body></html>
+
+<section class="quote">
+  <div class="wrap reveal">
+    <blockquote>It's not what you eat.<br>It's <em class="when">when</em> you eat it.</blockquote>
+    <p>Eat a little less than you burn. Front-load your day. Close the kitchen. Repeat.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap center reveal">
+    <span class="eyebrow">Questions</span>
+    <h2 style="margin-top:14px">Good to know</h2>
+  </div>
+  <div class="wrap faq reveal">
+    <details><summary>Is NutraTrim a diet?</summary><p>No. You can eat what you like. NutraTrim decides how much and when: a daily calorie deficit, bigger meals early, fewer carbs late, and nothing after the kitchen closes. Every meal comes with ideas if you want them.</p></details>
+    <details><summary>How does it know how many calories I burn?</summary><p>It starts with a simple rule of thumb: your weight in pounds times ten, a rough resting estimate. If you know your real number from a tracker or your doctor, type it in. Workouts can add to it, logged by hand or read from Apple Health.</p></details>
+    <details><summary>Why no eating after 7 PM?</summary><p>That's the idea behind the app: front-load your calories and give your body a long overnight break. The kitchen closes at 7 PM or three hours before bed, whichever comes first, and you can change the time.</p></details>
+    <details><summary>How accurate is the plate scanner?</summary><p>It's a good estimate, not a scale. Portion size is the hard part, so results can be off by 20% or more. Shoot from above in good light with the whole plate in frame, and add a hint like "fried in butter" for what the camera can't see.</p></details>
+    <details><summary>What happens to my data?</summary><p>Your plan, your log and your Apple Health data stay on your iPhone. There's no account, no ads and no tracking. The only thing that leaves your phone is a plate photo you choose to scan, which is used for the estimate and not kept. <a href="privacy.html">Read the privacy policy</a>.</p></details>
+    <details><summary>Is it safe for everyone?</summary><p>NutraTrim is for healthy adults. It never sets a target below 1,200 calories a day. If you are pregnant or nursing, under 18, have diabetes or another medical condition, or have a history of eating disorders, talk to your doctor first.</p></details>
+    <details><summary>When is it on Android?</summary><p>NutraTrim is coming to iPhone first, with Android to follow. Both store links will appear on this page as soon as they're live.</p></details>
+  </div>
+</section>
+
+<section class="download" id="download">
+  <div class="wrap reveal">
+    <img class="icon" src="img/icon-512.png" alt="NutraTrim app icon" width="112" height="112">
+    <h2>Start your clock.</h2>
+    <p class="lede">Free on the App Store and Google Play. Set up in a minute, then let the clock do the remembering.</p>
+    <div class="badges">
+      <a class="badge store" data-store="appStore" href="#" aria-label="Download on the App Store"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store" width="162" height="54" loading="lazy"></a>
+      <a class="badge play store" data-store="googlePlay" href="#" aria-label="Get it on Google Play"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" width="206" height="80" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a class="brand" href="#top"><img src="img/apple-touch-icon.png" alt="">NutraTrim</a><p style="margin:14px 0 0">The meal clock for losing weight.<br>© 2026 Heart and Soil Living LTD.</p></div>
+    <nav><a href="privacy.html">Privacy Policy</a><a href="support.html">Support</a><a href="mailto:harmvadev@gmail.com">Contact</a></nav>
+    <p class="disclaimer">NutraTrim is a planning tool, not medical advice, and does not diagnose or treat any condition. Calorie and plate estimates are approximate. Apple, the Apple logo, Apple Watch and App Store are trademarks of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+// Store links: paste the real URLs here when the apps are live. Empty means "coming soon".
+const STORE_LINKS = {
+  appStore: "",
+  googlePlay: "",
+};
+
+// ---- The app's planning math (MealCore/Planner.swift), in JavaScript ----
+const FLOOR = 1200, WINDOW = 30, GAP = 120;
+function share(total, weights) {
+  const sum = weights.reduce((a, b) => a + b, 0);
+  const parts = weights.map(w => Math.round(total * w / sum / 10) * 10);
+  parts[0] += total - parts.reduce((a, b) => a + b, 0);
+  return parts;
+}
+function mealName(start, i, n) {
+  if (i === 0 && start < 660) return "Breakfast";
+  if (i === n - 1 && n > 1 && start >= 960) return "Dinner";
+  if (start < 660) return i === 0 ? "Breakfast" : "Morning meal";
+  if (start < 870) return "Lunch";
+  if (start < 990) return "Afternoon meal";
+  return "Early dinner";
+}
+function plan({ weightLb, deficit, meals, first, close }) {
+  const baseline = Math.round(weightLb) * 10;
+  const target = Math.max(FLOOR, baseline - deficit);
+  const last = Math.max(first, close - WINDOW);
+  const span = last - first;
+  const count = span <= 0 ? 1 : Math.max(1, Math.min(meals, Math.floor(span / GAP) + 1));
+  const starts = [...Array(count)].map((_, i) => count === 1 ? first : i === count - 1 ? last : Math.round((first + span * i / (count - 1)) / 15) * 15);
+  const weights = [...Array(count)].map((_, i) => count === 1 ? 1 : 1.2 - 0.4 * i / (count - 1));
+  const cals = share(target, weights);
+  return {
+    baseline, target, deficit: baseline - target, count, first, close,
+    meals: starts.map((start, i) => {
+      const pos = count > 1 ? i / (count - 1) : 0;
+      const carb = Math.round(50 - 30 * pos), protein = Math.round(25 + 15 * pos), fat = 100 - carb - protein;
+      const c = cals[i];
+      return { start, end: start + WINDOW, name: mealName(start, i, count), cal: c, carb, protein, fat,
+               g: { c: Math.round(c * carb / 400), p: Math.round(c * protein / 400), f: Math.round(c * fat / 900) } };
+    }),
+  };
+}
+const fmt = n => n.toLocaleString("en-US");
+function clock(m) {
+  m = ((m % 1440) + 1440) % 1440;
+  const h = Math.floor(m / 60), mm = m % 60, h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}:${String(mm).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
+}
+function until(sec) {
+  const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60);
+  return h ? `${h}h ${String(m).padStart(2, "0")}m` : `${Math.max(1, m)}m`;
+}
+
+// ---- 24-hour dial (midnight at the top), drawn as SVG ----
+const NS = "http://www.w3.org/2000/svg";
+function polar(minute, r) { const a = minute / 1440 * 2 * Math.PI - Math.PI / 2; return [300 + Math.cos(a) * r, 300 + Math.sin(a) * r]; }
+function arc(from, to, r) {
+  const [x1, y1] = polar(from, r), [x2, y2] = polar(to, r);
+  const large = ((to - from + 1440) % 1440) > 720 ? 1 : 0;
+  return `M${x1.toFixed(1)} ${y1.toFixed(1)} A${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+}
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+function drawDial(svg, p, { dark, hand }) {
+  svg.innerHTML = "";
+  const r = 238, w = dark ? 22 : 30;
+  el("circle", { cx: 300, cy: 300, r, fill: "none", stroke: dark ? "rgba(123,127,208,.45)" : "#d9d8ef", "stroke-width": w }, svg);
+  el("path", { d: arc(p.first, p.close, r), fill: "none", stroke: dark ? "rgba(77,176,120,.9)" : "#4db078", "stroke-width": w }, svg);
+  for (const m of p.meals) el("path", { d: arc(m.start, m.end, r), fill: "none", stroke: "#f47a35", "stroke-width": w + 16, "stroke-linecap": "round" }, svg);
+  for (let h = 0; h < 24; h++) {
+    const major = h % 6 === 0, [x1, y1] = polar(h * 60, r - w / 2 - 8), [x2, y2] = polar(h * 60, r - w / 2 - (major ? 26 : 16));
+    el("line", { x1, y1, x2, y2, stroke: dark ? "rgba(255,255,255,.5)" : "#b9b6c8", "stroke-width": major ? 3 : 1.5, "stroke-linecap": "round" }, svg);
+    if (major) {
+      const [tx, ty] = polar(h * 60, r + w / 2 + 26);
+      const t = el("text", { x: tx, y: ty + 6, "text-anchor": "middle", "font-size": 18, "font-weight": 700, fill: dark ? "rgba(255,255,255,.65)" : "#8a87a0", "font-family": "Plus Jakarta Sans, sans-serif" }, svg);
+      t.textContent = ["12a", "6a", "12p", "6p"][h / 6];
+    }
+  }
+  if (!dark) {
+    const t1 = el("text", { x: 300, y: 292, "text-anchor": "middle", "font-size": 64, "font-weight": 800, fill: "#1d1b33", "font-family": "Fraunces, serif" }, svg);
+    t1.textContent = fmt(p.target);
+    const t2 = el("text", { x: 300, y: 330, "text-anchor": "middle", "font-size": 20, "font-weight": 600, fill: "#66637d", "font-family": "Plus Jakarta Sans, sans-serif" }, svg);
+    t2.textContent = "calories a day";
+    const t3 = el("text", { x: 300, y: 372, "text-anchor": "middle", "font-size": 18, "font-weight": 700, fill: "#4db078", "font-family": "Plus Jakarta Sans, sans-serif" }, svg);
+    t3.textContent = `open ${clock(p.first)}–${clock(p.close)}`;
+  }
+  if (hand != null) {
+    const g = el("g", { id: "hand" }, svg);
+    const [x1, y1] = polar(hand, r - w / 2 - 34), [x2, y2] = polar(hand, r + w / 2 + 4), [cx, cy] = polar(hand, r);
+    el("line", { x1, y1, x2, y2, stroke: "#fff", "stroke-width": 5, "stroke-linecap": "round" }, g);
+    el("circle", { cx, cy, r: 11, fill: "#fff" }, g);
+  }
+}
+
+// ---- Hero: a live dial and status for the visitor's own time ----
+const heroPlan = plan({ weightLb: 200, deficit: 500, meals: 3, first: 420, close: 1140 });
+function heroTick() {
+  const now = new Date(), sec = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds(), minute = sec / 60;
+  drawDial(document.getElementById("heroDial"), heroPlan, { dark: true, hand: minute });
+  const meals = heroPlan.meals, text = document.getElementById("nowText"), dot = document.getElementById("nowDot");
+  const eating = meals.find(m => minute >= m.start && minute < m.end);
+  const next = meals.find(m => m.start * 60 > sec);
+  const time = clock(Math.floor(minute));
+  if (eating) { dot.className = "dot eat"; text.textContent = `${time} where you are: time to eat! ${eating.name}, ${eating.cal} calories.`; }
+  else if (next && minute < heroPlan.close) { dot.className = "dot"; text.textContent = `${time} where you are: kitchen open. ${next.name} in ${until(next.start * 60 - sec)}.`; }
+  else { const open = (sec < heroPlan.first * 60 ? heroPlan.first * 60 - sec : 86400 - sec + heroPlan.first * 60); dot.className = "dot closed"; text.textContent = `${time} where you are: kitchen's closed. Opens in ${until(open)}.`; }
+}
+heroTick(); setInterval(heroTick, 1000);
+
+// Notifications that take turns beside the phone.
+const NOTES = [
+  ["now", "Time to eat! 🍽 Breakfast", "Eat 600 calories in the next half hour. Try: Greek yogurt berry bowl."],
+  ["now", "Time to eat! 🍽 Lunch", "Eat 500 calories in the next half hour, keep carbs around 44 g."],
+  ["now", "Kitchen's closed 🔒", "No more food until 7:00 AM tomorrow. It's not what you eat, it's when you eat it."],
+  ["now", "Time to eat! 🍽 Dinner", "Eat 400 calories in the next half hour. Try: salmon and asparagus."],
+];
+function noteHTML([when, title, body]) {
+  return `<div class="top"><img src="img/favicon.png" alt=""><span>NutraTrim</span><span>${when}</span></div><strong>${title}</strong>${body}`;
+}
+let noteIndex = 0;
+function cycleNotes() {
+  const a = document.getElementById("notifA"), b = document.getElementById("notifB");
+  const [show, hide] = noteIndex % 2 ? [b, a] : [a, b];
+  hide.classList.remove("show");
+  show.innerHTML = noteHTML(NOTES[noteIndex % NOTES.length]);
+  requestAnimationFrame(() => show.classList.add("show"));
+  noteIndex++;
+}
+cycleNotes(); setTimeout(() => { cycleNotes(); setInterval(cycleNotes, 3600); }, 1800);
+
+// ---- Planner ----
+const state = { weight: 180, unit: "lb", deficit: 500, meals: 3, first: 420, close: 1140 };
+const firstSel = document.getElementById("first"), closeSel = document.getElementById("close");
+for (let m = 300; m <= 660; m += 30) firstSel.add(new Option(clock(m), m, false, m === 420));
+for (let m = 960; m <= 1260; m += 30) closeSel.add(new Option(clock(m), m, false, m === 1140));
+const weightIn = document.getElementById("weight");
+function pounds() { return state.unit === "lb" ? state.weight : state.weight * 2.20462; }
+function render() {
+  const p = plan({ weightLb: pounds(), deficit: state.deficit, meals: state.meals, first: state.first, close: state.close });
+  document.getElementById("weightOut").textContent = `${state.weight} ${state.unit}`;
+  document.getElementById("target").innerHTML = `${fmt(p.target)}<small>calories a day</small>`;
+  const perWeek = p.deficit * 7 / 3500, rate = state.unit === "lb" ? `${perWeek.toFixed(1)} lb` : `${(perWeek / 2.20462).toFixed(1)} kg`;
+  document.getElementById("stats").innerHTML =
+    `<span>Burn <b>${fmt(p.baseline)}</b></span><span>Deficit <b>${fmt(p.deficit)}</b></span><span>≈ <b>${rate}</b> a week</span>` +
+    (p.deficit < state.deficit ? `<span style="color:#c2531a">Floor of 1,200 applied</span>` : "") +
+    (p.count < state.meals ? `<span style="color:#c2531a">Only ${p.count} meals fit 2 hours apart</span>` : "");
+  document.getElementById("meals").innerHTML = p.meals.map(m => `
+    <div class="meal"><time>${clock(m.start)}</time>
+      <div><div class="name">${m.name}</div>
+        <div class="carbbar" title="Carbs ${m.carb}%"><i style="width:${m.carb * 2}%"></i></div>
+        <div class="macros">Carbs ${m.carb}% · ${m.g.c} g carbs · ${m.g.p} g protein · ${m.g.f} g fat</div></div>
+      <div class="cal">${m.cal}<small>calories</small></div></div>`).join("") +
+    `<div class="meal closed"><time>${clock(p.close)}</time><div><div class="name">Kitchen closes 🔒</div><div class="macros">Nothing more until ${clock(p.first)}</div></div><div></div></div>`;
+  drawDial(document.getElementById("planDial"), p, { dark: false });
+}
+weightIn.addEventListener("input", () => { state.weight = +weightIn.value; render(); });
+document.querySelectorAll("[data-unit]").forEach(b => b.addEventListener("click", () => {
+  if (state.unit === b.dataset.unit) return;
+  state.weight = b.dataset.unit === "kg" ? Math.round(state.weight / 2.20462) : Math.round(state.weight * 2.20462);
+  state.unit = b.dataset.unit;
+  weightIn.min = state.unit === "kg" ? 45 : 100; weightIn.max = state.unit === "kg" ? 180 : 400; weightIn.value = state.weight;
+  document.querySelectorAll("[data-unit]").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+}));
+function segment(id, key) {
+  document.querySelectorAll(`#${id} button`).forEach(b => b.addEventListener("click", () => {
+    state[key] = +b.dataset.v;
+    document.querySelectorAll(`#${id} button`).forEach(x => x.setAttribute("aria-pressed", x === b));
+    render();
+  }));
+}
+segment("deficitSeg", "deficit"); segment("mealsSeg", "meals");
+firstSel.addEventListener("change", () => { state.first = +firstSel.value; render(); });
+closeSel.addEventListener("change", () => { state.close = +closeSel.value; render(); });
+render();
+
+// ---- Store badges: real links once live, a friendly note until then ----
+const toast = document.getElementById("toast");
+let toastTimer;
+document.querySelectorAll("a.store").forEach(a => {
+  const url = STORE_LINKS[a.dataset.store];
+  if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; return; }
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    toast.textContent = a.dataset.store === "appStore" ? "Coming soon to the App Store. Check back shortly!" : "Coming soon to Google Play. Check back shortly!";
+    toast.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+  });
+});
+
+// ---- Nav background and reveal-on-scroll ----
+const nav = document.getElementById("nav");
+const onScroll = () => nav.classList.toggle("scrolled", scrollY > 30);
+addEventListener("scroll", onScroll, { passive: true }); onScroll();
+const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll(".reveal").forEach(r => io.observe(r));
+
+// Count the watch up once it's on screen.
+const burn = document.getElementById("burn");
+new IntersectionObserver((entries, obs) => entries.forEach(e => {
+  if (!e.isIntersecting) return; obs.disconnect();
+  const t0 = performance.now();
+  const step = t => { const k = Math.min(1, (t - t0) / 1400); burn.textContent = Math.round(320 * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}), { threshold: .5 }).observe(burn);
+
+// The ticker loops seamlessly with a second copy of its items.
+const ticker = document.getElementById("ticker"); ticker.innerHTML += ticker.innerHTML;
+</script>
+</body>
+</html>
