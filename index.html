@@ -91,12 +91,12 @@ em.when { font-style: italic; color: var(--orange-2); }
 .phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 39px; }
 .hero .phone { transform: rotate(-4deg); animation: float 7s ease-in-out infinite; }
 @keyframes float { 50% { transform: rotate(-4deg) translateY(-12px); } }
-.notif { position: absolute; width: 300px; padding: 14px 16px; border-radius: 20px; color: var(--ink); background: rgba(255,255,255,.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 20px 40px -12px rgba(0,0,0,.45); font-size: 14px; line-height: 1.4; opacity: 0; transform: translateY(12px) scale(.97); transition: opacity .6s, transform .6s; }
+.notif { position: absolute; width: 300px; padding: 14px 16px; border-radius: 20px; color: #f4f2fb; background: rgba(38,35,78,.82); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 20px 40px -12px rgba(0,0,0,.45); font-size: 14px; line-height: 1.4; opacity: 0; transform: translateY(12px) scale(.97); transition: opacity .6s, transform .6s; }
 .notif.show { opacity: 1; transform: none; }
-.notif .top { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.notif .top { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,.6); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
 .notif .top img { width: 20px; height: 20px; border-radius: 5px; }
 .notif .top span:last-child { margin-left: auto; text-transform: none; letter-spacing: 0; font-weight: 500; }
-.notif strong { display: block; font-size: 15px; }
+.notif strong { display: block; font-size: 15px; color: #fff; }
 .notif-a { top: 70px; left: -30px; }
 .notif-b { bottom: 90px; right: -36px; }
 
